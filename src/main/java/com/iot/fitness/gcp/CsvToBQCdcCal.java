@@ -44,7 +44,6 @@ public class CsvToBQCdcCal {
 	private static String HEADERS = "Gender,Min_Age,Max_Age,Sedentary,Moderately_Active,Active";
 
 	public static class FormatForBigquery extends DoFn<String, TableRow> {
-
 		private String[] columnNames = HEADERS.split(",");
 
 		@ProcessElement
@@ -79,12 +78,12 @@ public class CsvToBQCdcCal {
 	public static void main(String[] args) throws Throwable {
 		// Currently hard-code the variables, this can be passed into as
 		// parameters
-		String sourceFilePath = "gs://iot-cd-data-bucket-barrord/temp/cdc_calorie_needs_lookup.csv";
-		String tempLocationPath = "gs://iot-cd-data-bucket-barrord/temp/bq";
+		String sourceFilePath = "gs://cdc-recommendations-data/cdc-recommendations/cdc_calorie_needs_lookup.csv";
+		String tempLocationPath = "gs://cdc-recommendations-data/temp/bq";
 		boolean isStreaming = false;
 		TableReference tableRef = new TableReference();
 		// Replace this with your own GCP project ids
-		tableRef.setProjectId("iot-fitness-data-demo-barrord");
+		tableRef.setProjectId("iot-fitness-demo-barrord");
 		tableRef.setDatasetId("Fitness_Data");
 		tableRef.setTableId("CDC_Cals_Needed_Data");
 

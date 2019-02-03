@@ -78,19 +78,21 @@ public class CsvToBQCdcSleep {
 	public static void main(String[] args) throws Throwable {
 		// Currently hard-code the variables, this can be passed into as
 		// parameters
-		String sourceFilePath = "gs://iot-cd-data-bucket-barrord/temp/cdc_sleep_hours_lookup.csv";
-		String tempLocationPath = "gs://iot-cd-data-bucket-barrord/temp/bq";
+		
 		boolean isStreaming = false;
+		String sourceFilePath = "gs://cdc-recommendations-data/cdc-recommendations/cdc_sleep_hours_lookup.csv";
+		String tempLocationPath = "gs://cdc-recommendations-data/temp/bq";
+		
 		TableReference tableRef = new TableReference();
 		// Replace this with your own GCP project ids
-		tableRef.setProjectId("iot-fitness-data-demo-barrord");
+		tableRef.setProjectId("iot-fitness-demo-barrord");
 		tableRef.setDatasetId("Fitness_Data");
 		tableRef.setTableId("CDC_Sleep_Needed_Data");
 
 		PipelineOptions options = PipelineOptionsFactory.fromArgs(args).withValidation().create();
 		// This is required for BigQuery
 		options.setTempLocation(tempLocationPath);
-		options.setJobName("csvtobq");
+		options.setJobName("cdc-sleep-data-csv-to-bq");
 		Pipeline p = Pipeline.create(options);
 
 		p.apply("Read CSV File", TextIO.read().from(sourceFilePath))
